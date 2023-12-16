@@ -1,0 +1,13 @@
+
++------------------+
+|       USERS      |
++------------------+
+| fist_name        |
+| last_name        |
+| middle_name      |
+| email            |
+| password         |
+| birthday         |
+| address          |
+| country          |
++------------------+
