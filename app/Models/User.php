@@ -28,7 +28,8 @@ class User extends Authenticatable
         'address',
         'mobile_number',
         'role',
-        'is_admin_verified'
+        'verified_by_admin',
+        'is_rejected'
     ];
 
     /**
@@ -39,6 +40,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'verified_by_admin',
+        'is_rejected'
     ];
 
     /**
@@ -49,13 +52,19 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'is_admin_verified' => 'boolean',
+        'verified_by_admin' => 'boolean',
+        'is_rejected' => 'boolean'
     ];
 
 
     protected $appends = [
-        'IsAdminVerified'
+        'IsAdminVerified',
+        'FullName'
     ];
+
+    public function getFullNameAttribute() {
+        return $this->first_name . ' ' . $this->middle_name . ' ' . $this->last_name;
+    }
 
     public function getIsAdminVerifiedAttribute() {
         /*
@@ -68,9 +77,7 @@ class User extends Authenticatable
             return true;
         }
 
-        $bool = $this->is_admin_verified;
-
-        return ">>{$bool}";
+        return $this->verified_by_admin;
     }
 
     public function user_access() {

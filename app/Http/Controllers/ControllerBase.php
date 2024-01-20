@@ -41,7 +41,21 @@ class ControllerBase extends Controller {
     function statusCode($data='', $code=200) {
         return response()->json($data, $code);
     }
+
     //
+
+    function genericGetAll() {
+        $result = $this->service->all();
+       return $this->ok($result);
+    }
+
+    function genericGet($id) {
+        $result = $this->service->get($id);
+
+        return ($result)
+            ? $this->ok($result)
+            : $this->notFound([ 'message' => 'Item not found!' ]);
+    }
 
     function genericCreate() {
         $validator = Validator::make(request()->all(), $this->createRules());
@@ -65,7 +79,7 @@ class ControllerBase extends Controller {
     }
 
     function genericUpdate($id) {
-        $validator = Validator::make(request()->all(), $this->updateRulesRules());
+        $validator = Validator::make(request()->all(), $this->updateRules());
 
         if ($validator->fails()) {
             return $this->badRequest([ 'validation' => $validator->errors() ]);
@@ -82,7 +96,7 @@ class ControllerBase extends Controller {
 
         return ($uresult)
         ? $this->ok($updated)
-        : $this->badRequest([ 'message' => 'Fialed to update item!' ]);
+        : $this->badRequest([ 'message' => 'Failed to update item!' ]);
     }
 
     function genericDelete($id) {

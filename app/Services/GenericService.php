@@ -11,7 +11,7 @@ class GenericService implements IGenericService {
     }
 
     function get($id) {
-        return $this->model::find($id);
+        return (object) ($this->model::find($id)->toArray());
     }
 
     function all() {
@@ -27,7 +27,7 @@ class GenericService implements IGenericService {
     }
 
     function update($data) {
-        return $this->model::where('id', $data->id)->update($data);
+        return $this->model::find($data->id)->update((array) $data);
     }
 
     function delete($data) {

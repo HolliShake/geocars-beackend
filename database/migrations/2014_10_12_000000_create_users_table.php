@@ -27,7 +27,8 @@ return new class extends Migration
             $table->string('country', 50)->nullable();
             $table->integer('mobile_number', false, true)->nullable();
             $table->string('gender', 10)->nullable();
-            $table->boolean('is_admin_verified')->default(false);
+            $table->boolean('verified_by_admin')->default(false);
+            $table->boolean('is_rejected')->default(false);
             //
             $table->enum('role', ['Admin', 'Renter', 'Lender'])->nullable();
         });

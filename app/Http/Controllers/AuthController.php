@@ -46,6 +46,10 @@ class AuthController extends ControllerBase {
             return $this->unAuthorize([ 'message' => 'Invalid credentials' ]);
         }
 
+        if (!$user->verified_by_admin) {
+            return $this->unAuthorize([ 'message' => 'Account is not yet verified by admin' ]);
+        }
+
         if (!Hash::check(request()->input('password'), $user->password)) {
             return $this->unAuthorize([ 'message' => 'Invalid credentials' ]);
         }
@@ -71,6 +75,7 @@ class AuthController extends ControllerBase {
         $newuser = [
             ...request()->all(),
             'password' => Hash::make(request()->input('password')),
+            'verified_by_admin' => strcmp(request()->input('role'), 'Renter') === 0,
         ];
         $newuser = $this->service->create($newuser);
 
@@ -107,7 +112,8 @@ class AuthController extends ControllerBase {
             'address' => 'Igpit Youngsville, Opol, Misamis Oriental',
             'mobile_number' => '0945',
             'role' => 'Admin',
-            'is_admin_verified' => true,
+            'verified_by_admin' => true,
+            'is_rejected' => false
         ]);
 
         if (!$user) {
