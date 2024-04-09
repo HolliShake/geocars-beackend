@@ -66,3 +66,12 @@ Route::middleware('auth:api')->controller(UserSubscriptionController::class)->gr
     //
     Route::post('/UserSubscription/subscribe/{subscription_id}', 'subscribeAttempt')->where('subscription_id', '\d+');
 });
+
+
+// Car
+Route::middleware('auth:api')->controller(CarController::class)->group(function() {
+    Route::get('/Car/all/{userSubscriptionId}', 'getCarsByUserSubscription')->where('userSubscriptionId', '\d+');
+    Route::post('/Car/create', 'createCar');
+    /**** Simple hack because put is not working with FormData ****/
+    Route::post('/Car/update/{car_id}', 'updateCar')->where('car_id', '\d+');
+});

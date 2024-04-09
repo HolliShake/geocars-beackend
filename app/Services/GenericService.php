@@ -34,4 +34,8 @@ class GenericService implements IGenericService {
         return $this->model::where('id', $data->id)->delete();
     }
 
+    function deleteById($id) {
+        return $this->model::where('id', $id)->delete();
+    }
+
 }

@@ -10,12 +10,16 @@ class UserSubscription extends Model
     use HasFactory;
     protected $table = 'user_subscription';
     protected $primaryKey = 'id';
-    protected $timestamp = true;
+    public $timestamps = true;
 
     protected $fillable = [
         'user_id',
         'subscription_id',
         'is_active'
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean'
     ];
 
     function subscription() {

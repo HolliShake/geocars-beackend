@@ -17,6 +17,13 @@ class Car extends Model
         'car_year',
         'car_plate',
         'car_description',
-        'car_features',
+        'car_features', // array|jsonlike
+        'units_available',
+        'units_left',
+        'user_subscription_id'
     ];
+
+    public function car_photo() {
+        return $this->hasMany(CarPhoto::class);
+    }
 }

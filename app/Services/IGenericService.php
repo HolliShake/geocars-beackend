@@ -8,4 +8,5 @@ interface IGenericService {
     function createAll($dataArray);
     function update($data);
     function delete($data);
+    function deleteById($id);
 }
