@@ -12,4 +12,8 @@ class UserSubscriptionService extends GenericService implements IUserSubscriptio
     function getUserSubscriptionByUserId($user_id) {
         return $this->model::with('subscription')->where('user_id', $user_id)->get();
     }
+
+    function getSelectedUserSubscription($user_id) {
+        return $this->model::with('subscription')->where('user_id', $user_id)->where('is_selected', 1)->first();
+    }
 }

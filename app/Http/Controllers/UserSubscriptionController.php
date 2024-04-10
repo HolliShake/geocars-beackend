@@ -51,6 +51,32 @@ class UserSubscriptionController extends ControllerBase
             : $this->badRequest([ 'message' => 'Subscription failed!' ]);
     }
 
+    function updateMyStatus($user_subscription_id) {
+        $active = $this->service->getSelectedUserSubscription(auth()->user()->id);
+
+        if ($active && (request()->input('is_selected'))) {
+            if ($active->id == $user_subscription_id) {
+                return $this->noContent();
+            }
+
+            $active->is_selected = 0;
+            $active->save();
+        }
+
+        $new = $this->service->get($user_subscription_id);
+
+        if (!$new) {
+            return $this->notFound([ 'message' => 'Item not found!' ]);
+        }
+
+        $new->is_selected = true;
+        $uresult = $new->save();
+
+        return ($uresult)
+            ? $this->noContent()
+            : $this->badRequest([ 'message' => 'Failed to update item!' ]);
+    }
+
     function createRules()
     {
         return [

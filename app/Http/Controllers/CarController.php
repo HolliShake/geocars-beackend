@@ -36,18 +36,22 @@ class CarController extends ControllerBase
             // Insert images
             $images = [];
 
-            $index = 0;
-            while (request()->hasFile('image-'.$index)) {
-                $image = request()->file('image-'.$index);
-                $uploadResult = $this->carPhotoService->uploadImage($result->id, $image);
-                $index++;
+            $upload_keys = array_keys(request()->all());
+            $upload_keys = array_filter($upload_keys, function($key) {
+                return str_starts_with($key, 'upload-image-');
+            });
+            while (count($upload_keys) > 0) {
+                $top = array_pop($upload_keys);
+                /*****************************/
+                $file = request()->file($top);
+                $uploadResult = $this->carPhotoService->uploadImage($result->id, $file);
 
                 if ($uploadResult) {
                     array_push($images, $uploadResult);
                 }
             }
 
-            $result['car_photos'] = $images;
+            $result['car_photo'] = $images;
         }
 
         return ($result)
@@ -72,9 +76,6 @@ class CarController extends ControllerBase
         $uresult = $this->service->update($updated);
 
         if ($uresult) {
-            // Newly Inserted images
-            $images = [];
-
             $upload_keys = array_keys(request()->all());
             $upload_keys = array_filter($upload_keys, function($key) {
                 return str_starts_with($key, 'upload-image-');
@@ -101,6 +102,12 @@ class CarController extends ControllerBase
         ? $this->ok($this->service->get($id))
         : $this->badRequest([ 'message' => 'Failed to update item!' ]);
     }
+
+    function deleteCar($id) {
+       return $this->genericDelete($id);
+    }
+
+    function getAvailableCars()
 
     function createRules()
     {

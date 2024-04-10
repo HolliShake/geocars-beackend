@@ -8,6 +8,8 @@ use App\Services\car\CarService;
 use App\Services\car\ICarService;
 use App\Services\car_photo\CarPhotoService;
 use App\Services\car_photo\ICarPhotoService;
+use App\Services\car_posting\CarPostingService;
+use App\Services\car_posting\ICarPostingService;
 use App\Services\subscription\ISubscriptionService;
 use App\Services\subscription\SubscriptionService;
 use App\Services\user\IUserService;
@@ -26,6 +28,7 @@ class ServicesInjector
         $app->bind(IUserAccessService::class, UserAccessService::class);
         $app->bind(ICarService::class, CarService::class);
         $app->bind(ICarPhotoService::class, CarPhotoService::class);
+        $app->bind(ICarPostingService::class, CarPostingService::class);
         $app->bind(ISubscriptionService::class, SubscriptionService::class);
         $app->bind(IUserSubscriptionService::class, UserSubscriptionService::class);
     }

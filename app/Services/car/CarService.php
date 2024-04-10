@@ -18,4 +18,8 @@ class CarService extends GenericService implements ICarService {
         return $this->model::with('car_photo')->where('user_subscription_id', $user_subscription_id)->get();
     }
 
+    function getAvailableCarsByUserSubscriptionId($user_subscription_id) {
+        return $this->model::with('car_photo')->where('user_subscription_id', $user_subscription_id)->where('units_left', '>', 0)->get();
+    }
+
 }

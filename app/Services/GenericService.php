@@ -11,7 +11,8 @@ class GenericService implements IGenericService {
     }
 
     function get($id) {
-        return (object) ($this->model::find($id)->toArray());
+        //return (object) ($this->model::find($id)->toArray());
+        return $this->model::find($id);
     }
 
     function all() {

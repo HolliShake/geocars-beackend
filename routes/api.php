@@ -65,6 +65,7 @@ Route::middleware('auth:api')->controller(UserSubscriptionController::class)->gr
     Route::delete('/UserSubscription/delete/{user_subscription_id}', 'deleteUserSubscription')->where('user_subscription_id', '\d+');
     //
     Route::post('/UserSubscription/subscribe/{subscription_id}', 'subscribeAttempt')->where('subscription_id', '\d+');
+    Route::patch('/UserSubscription/My/status/{subscription_id}', 'updateMyStatus')->where('subscription_id', '\d+');
 });
 
 
@@ -74,4 +75,5 @@ Route::middleware('auth:api')->controller(CarController::class)->group(function(
     Route::post('/Car/create', 'createCar');
     /**** Simple hack because put is not working with FormData ****/
     Route::post('/Car/update/{car_id}', 'updateCar')->where('car_id', '\d+');
+    Route::delete('/Car/delete/{car_id}', 'deleteCar')->where('car_id', '\d+');
 });
