@@ -15,6 +15,14 @@ class CarPostingController extends ControllerBase
         return $this->genericGetAll();
     }
 
+    public function getActiveCarPostingsByUserSubscriptionId($user_subscription_id) {
+        return $this->service->getActiveCarPostingsByUserSubscriptionId($user_subscription_id);
+    }
+
+    public function getExpiredCarPostingsByUserSubscriptionId($user_subscription_id) {
+        return $this->service->getExpiredCarPostingsByUserSubscriptionId($user_subscription_id);
+    }
+
     public function getCarPosting($car_posting_id) {
         return $this->genericGet($car_posting_id);
     }

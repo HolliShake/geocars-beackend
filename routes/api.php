@@ -52,6 +52,8 @@ Route::middleware('auth:api')->controller(CarController::class)->group(function(
 Route::middleware('auth:api')->controller(CarPostingController::class)->group(function() {
     Route::get('/CarPosting/all', 'getAllCarPostings');
     Route::get('/CarPosting/user_subscription/{user_subscription_id}', 'getCarPostingsByUserSubscriptionId')->where('user_subscription_id', '\d+');
+    Route::get('/CarPosting/user_subscription/active/{user_subscription_id}', 'getActiveCarPostingsByUserSubscriptionId')->where('user_subscription_id', '\d+');
+    Route::get('/CarPosting/user_subscription/expired/{user_subscription_id}', 'getExpiredCarPostingsByUserSubscriptionId')->where('user_subscription_id', '\d+');
     Route::get('/CarPosting/{car_posting_id}', 'getCarPosting')->where('car_posting_id', '\d+');
     Route::post('/CarPosting/create', 'createCarPosting');
     Route::put('/CarPosting/update/{car_posting_id}', 'updateCarPosting')->where('car_posting_id', '\d+');
