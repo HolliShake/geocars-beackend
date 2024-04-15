@@ -17,7 +17,7 @@ return new class extends Migration
             //
             $table->unsignedBigInteger('car_id');
             $table->decimal('price',9, 3)->default(0.00);
-            $table->decimal('excess_charges',9, 3)->default(0.00);
+            $table->decimal('excess_charges', 9, 3)->default(0.00);
             $table->integer('days');
             //
             $table->dateTime('post_date');

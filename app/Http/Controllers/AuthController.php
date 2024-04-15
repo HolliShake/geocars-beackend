@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Services\auth\IAuthService;
 use App\Services\user_access\IUserAccessService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;

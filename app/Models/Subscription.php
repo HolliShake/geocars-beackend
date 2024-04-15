@@ -16,7 +16,6 @@ class Subscription extends Model
         'description',
         'price',
         'max_cars',
-        'max_company',
         'is_analytics_enabled',
         'is_tracking_enabled',
         'is_search_priority',

@@ -26,8 +26,5 @@ class UserSubscription extends Model
         return $this->belongsTo(Subscription::class);
     }
 
-    static
-    function canAddCar($user_id) {
-        return
-    }
+
 }

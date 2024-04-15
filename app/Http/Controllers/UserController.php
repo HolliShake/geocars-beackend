@@ -25,7 +25,7 @@ class UserController extends ControllerBase {
             return $this->notFound(null);
         }
 
-        $updated = (object) array_merge((array) $user, [ 'verified_by_admin' => true, 'is_rejected' => false ]);
+        $updated = (object) array_merge((array) $user, [ 'id' => $user_id,  'verified_by_admin' => true, 'is_rejected' => false ]);
         $uresult = $this->service->update($updated);
 
         return ($uresult)
@@ -40,7 +40,7 @@ class UserController extends ControllerBase {
             return $this->notFound(null);
         }
 
-        $updated = (object) array_merge((array) $user, [ 'verified_by_admin' => true, 'is_rejected' => true ]);
+        $updated = (object) array_merge((array) $user, [ 'id' => $user_id, 'verified_by_admin' => true, 'is_rejected' => true ]);
         $uresult = $this->service->update($updated);
 
         return ($uresult)

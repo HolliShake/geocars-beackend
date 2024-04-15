@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\CarPostingController;
 use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserSubscriptionController;
@@ -40,10 +41,21 @@ Route::middleware('auth:api')->controller(UserController::class)->group(function
 Route::middleware('auth:api')->controller(CarController::class)->group(function() {
     Route::get('/Car/all', 'getAllCars');
     Route::get('/Car/user_subscription/{user_subscription_id}', 'getCarsBySubscriptionId')->where('user_subscription_id', '\d+');
+    Route::get('/Car/user_subscription/available/{user_subscription_id}', 'getAvailableCarsByUserSubscription')->where('user_subscription_id', '\d+');
     Route::get('/Car/{car_id}', 'getCar')->where('car_id', '\d+');
     Route::post('/Car/create', 'createCar');
     Route::put('/Car/update/{car_id}', 'updateCar')->where('car_id', '\d+');
     Route::delete('/Car/delete/{car_id}', 'deleteCar')->where('car_id', '\d+');
+});
+
+// Car posting
+Route::middleware('auth:api')->controller(CarPostingController::class)->group(function() {
+    Route::get('/CarPosting/all', 'getAllCarPostings');
+    Route::get('/CarPosting/user_subscription/{user_subscription_id}', 'getCarPostingsByUserSubscriptionId')->where('user_subscription_id', '\d+');
+    Route::get('/CarPosting/{car_posting_id}', 'getCarPosting')->where('car_posting_id', '\d+');
+    Route::post('/CarPosting/create', 'createCarPosting');
+    Route::put('/CarPosting/update/{car_posting_id}', 'updateCarPosting')->where('car_posting_id', '\d+');
+    Route::delete('/CarPosting/delete/{car_posting_id}', 'deleteCarPosting')->where('car_posting_id', '\d+');
 });
 
 // Subscription

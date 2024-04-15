@@ -16,6 +16,10 @@ class CarController extends ControllerBase
         return $this->ok($this->service->getCarsByUserSubscriptionId($userSubscriptionId));
     }
 
+    function getAvailableCarsByUserSubscription($userSubscriptionId) {
+        return $this->ok($this->service->getAvailableCarsByUserSubscriptionId($userSubscriptionId));
+    }
+
     function createCar() {
         $validator = Validator::make(request()->all(), $this->createRules());
 
@@ -106,8 +110,6 @@ class CarController extends ControllerBase
     function deleteCar($id) {
        return $this->genericDelete($id);
     }
-
-    function getAvailableCars()
 
     function createRules()
     {

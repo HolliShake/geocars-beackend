@@ -37,7 +37,6 @@ class SubscriptionController extends ControllerBase
             'description' => 'required|string',
             'price' => 'required|numeric',
             'max_cars' => 'required|numeric',
-            'max_company' => 'required|numeric',
             'is_analytics_enabled' => 'required|boolean',
             'is_tracking_enabled' => 'required|boolean',
             'is_search_priority' => 'required|boolean',
