@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\car_posting\ICarPostingService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CarPostingController extends ControllerBase
 {
@@ -27,12 +28,29 @@ class CarPostingController extends ControllerBase
         return $this->genericGet($car_posting_id);
     }
 
-    public function createCarPosting(Request $request) {
-        return $this->genericCreate($request);
+    public function createCarPosting() {
+        return $this->genericCreate();
     }
 
-    public function updateCarPosting(Request $request, $car_posting_id) {
-        return $this->genericUpdate($request, $car_posting_id);
+    public function updateCarPosting($car_posting_id) {
+        $validator = Validator::make(request()->all(), $this->updateRules());
+
+        if ($validator->fails()) {
+            return $this->badRequest([ 'validation' => $validator->errors() ]);
+        }
+
+        $old = $this->service->get($car_posting_id);
+
+        if (!$old) {
+            return $this->notFound([ 'message' => 'Item not found!' ]);
+        }
+
+        $updated = (object) array_merge((array) $old, request()->all());
+        $uresult = $this->service->update($updated);
+
+        return ($uresult)
+        ? $this->ok($this->service->get($car_posting_id))
+        : $this->badRequest([ 'message' => 'Failed to update item!' ]);
     }
 
     public function deleteCarPosting($car_posting_id) {

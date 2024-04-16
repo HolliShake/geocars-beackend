@@ -11,9 +11,11 @@ class CarPostingService extends GenericService implements ICarPostingService {
     }
 
     public function getActiveCarPostingsByUserSubscriptionId($user_subscription_id) {
-        return $this->model::with('car')
-            ->where('post_date', '<=', now())
-            ->where('expiry_date', '>=', now())
+        return $this->model::with(['car' => function($query) {
+            $query->with('car_photo');
+        }])
+            ->where('post_date', '<', now())
+            ->where('expiry_date', '>', now())
             ->whereHas('car', function($query) use ($user_subscription_id) {
                 // car units left is not zero
                 $query
@@ -25,7 +27,9 @@ class CarPostingService extends GenericService implements ICarPostingService {
     }
 
     public function getExpiredCarPostingsByUserSubscriptionId($user_subscription_id) {
-        return $this->model::with('car')
+        return $this->model::with(['car' => function($query) {
+            $query->with('car_photo');
+        }])
             ->where('expiry_date', '<=', now())
             ->whereHas('car', function($query) use ($user_subscription_id) {
                 // car units left is not zero
@@ -35,5 +39,22 @@ class CarPostingService extends GenericService implements ICarPostingService {
                     ->where('never_expires', false);
             })
             ->get();
+    }
+
+    // Override
+    function get($id) {
+        //return (object) ($this->model::find($id)->toArray());
+        return $this->model::with(['car' => function($query) {
+            $query->with('car_photo');
+        }])->find($id);
+    }
+
+    function create($data) {
+        $result = $this->model::create($data);
+        if ($result) {
+            return $this->get($result->id);
+        }
+
+        return $result;
     }
 }
